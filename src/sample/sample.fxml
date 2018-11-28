@@ -60,14 +60,14 @@
     <Label text="kontakt adresa" GridPane.columnIndex="1" GridPane.rowIndex="12" />
     <Label text="kontakt telefon" GridPane.columnIndex="1" GridPane.rowIndex="13" />
     <Label text="email adresa" GridPane.columnIndex="1" GridPane.rowIndex="14" />
-    <TextField id="ime" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="249.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-    <TextField id="prezime" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-    <TextField id="broj_indexa" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-    <TextField id="JMBG" GridPane.columnIndex="4" GridPane.rowIndex="7" />
-    <TextField id="mjesto_rodjenja" GridPane.columnIndex="4" GridPane.rowIndex="9" />
-    <TextField id="adresa" prefHeight="31.0" prefWidth="260.0" GridPane.columnIndex="4" GridPane.rowIndex="12" />
-    <TextField id="telefon" GridPane.columnIndex="4" GridPane.rowIndex="13" />
-    <TextField id="email" prefHeight="31.0" prefWidth="91.0" GridPane.columnIndex="4" GridPane.hgrow="NEVER" GridPane.rowIndex="14" GridPane.valignment="TOP" GridPane.vgrow="NEVER" />
+    <TextField fx:id="ime" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="249.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+    <TextField fx:id="prezime" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+    <TextField fx:id="broj_indexa" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+    <TextField fx:id="JMBG" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+    <TextField fx:id="mjesto_rodjenja" GridPane.columnIndex="4" GridPane.rowIndex="9" />
+    <TextField fx:id="adresa" prefHeight="31.0" prefWidth="260.0" GridPane.columnIndex="4" GridPane.rowIndex="12" />
+    <TextField fx:id="telefon" GridPane.columnIndex="4" GridPane.rowIndex="13" />
+    <TextField fx:id="email" prefHeight="31.0" prefWidth="91.0" GridPane.columnIndex="4" GridPane.hgrow="NEVER" GridPane.rowIndex="14" GridPane.valignment="TOP" GridPane.vgrow="NEVER" />
       <Label text="Odsjek" GridPane.columnIndex="1" GridPane.rowIndex="17" />
       <Label text="Godina studija" GridPane.columnIndex="1" GridPane.rowIndex="18" />
       <Label text="Ciklus studija" GridPane.columnIndex="1" GridPane.rowIndex="19" />
@@ -179,8 +179,8 @@
               </RadioButton>
           </children>
       </GridPane>
-      <ComboBox id="ciklus_studija" minHeight="25.0" prefHeight="50.0" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="19" />
-      <DatePicker id="datum_rodjenja" prefHeight="31.0" prefWidth="251.0" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+      <ComboBox fx:id="ciklus_studija" minHeight="25.0" prefHeight="50.0" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="19" />
+      <DatePicker fx:id="datum_rodjenja" onAction="#dateHandler" prefHeight="31.0" prefWidth="251.0" GridPane.columnIndex="4" GridPane.rowIndex="8" />
         
 </children>
 </GridPane>
