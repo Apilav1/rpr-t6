@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -47,6 +50,8 @@
       <RowConstraints />
       <RowConstraints />
       <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
       <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
       <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
 </rowConstraints>
@@ -87,22 +92,22 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <RadioButton id="RI" mnemonicParsing="false" text="RI">
+            <RadioButton fx:id="RI" mnemonicParsing="false" text="RI">
                <font>
                   <Font size="12.0" />
                </font>
             </RadioButton>
-            <RadioButton id="AE" mnemonicParsing="false" text="AE" GridPane.columnIndex="1">
+            <RadioButton fx:id="AE" mnemonicParsing="false" text="AE" GridPane.columnIndex="1">
                <font>
                   <Font size="12.0" />
                </font>
             </RadioButton>
-            <RadioButton id="TK" mnemonicParsing="false" text="TK" GridPane.columnIndex="2">
+            <RadioButton fx:id="TK" mnemonicParsing="false" text="TK" GridPane.columnIndex="2">
                <font>
                   <Font size="12.0" />
                </font>
             </RadioButton>
-            <RadioButton id="EE" mnemonicParsing="false" text="EE" GridPane.columnIndex="3">
+            <RadioButton fx:id="EE" mnemonicParsing="false" text="EE" GridPane.columnIndex="3">
              <font>
                  <Font size="12.0" />
              </font>
@@ -120,17 +125,17 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-             <RadioButton id="Prva" mnemonicParsing="false" text="Prva">
+             <RadioButton fx:id="Prva" mnemonicParsing="false" text="Prva">
                  <font>
                      <Font size="12.0" />
                  </font>
              </RadioButton>
-             <RadioButton id="Druga" mnemonicParsing="false" text="Druga" GridPane.columnIndex="1">
+             <RadioButton fx:id="Druga" mnemonicParsing="false" text="Druga" GridPane.columnIndex="1">
                  <font>
                      <Font size="12.0" />
                  </font>
              </RadioButton>
-             <RadioButton id="Treca" mnemonicParsing="false" text="Treća" GridPane.columnIndex="2">
+             <RadioButton fx:id="Treca" mnemonicParsing="false" text="Treća" GridPane.columnIndex="2">
                  <font>
                      <Font size="12.0" />
                  </font>
@@ -146,12 +151,12 @@
               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           </rowConstraints>
           <children>
-              <RadioButton id="redovan" alignment="TOP_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="redovan" textAlignment="RIGHT">
+              <RadioButton fx:id="redovan" alignment="TOP_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" text="redovan" textAlignment="RIGHT">
                   <font>
                       <Font size="12.0" />
                   </font>
               </RadioButton>
-              <RadioButton id="redovan_samofinansirajuci" mnemonicParsing="false" text="redovan samofinancirajuci" GridPane.columnIndex="1">
+              <RadioButton fx:id="redovan_samofinansirajuci" mnemonicParsing="false" text="redovan samofinancirajuci" GridPane.columnIndex="1">
                   <font>
                       <Font size="12.0" />
                   </font>
@@ -167,20 +172,30 @@
               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           </rowConstraints>
           <children>
-              <RadioButton id="Da" mnemonicParsing="false" text="Da">
+              <RadioButton fx:id="Da" mnemonicParsing="false" text="Da">
                   <font>
                       <Font size="12.0" />
                   </font>
               </RadioButton>
-              <RadioButton id="Ne" mnemonicParsing="false" text="Ne" GridPane.columnIndex="1">
+              <RadioButton fx:id="Ne" mnemonicParsing="false" text="Ne" GridPane.columnIndex="1">
                   <font>
                       <Font size="12.0" />
                   </font>
               </RadioButton>
           </children>
       </GridPane>
-      <ComboBox fx:id="ciklus_studija" minHeight="25.0" prefHeight="50.0" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="19" />
+    <ComboBox fx:id="ciklus_studija" minHeight="25.0" onAction="#ciklusKliknut" prefHeight="70.0" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="19">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="bachelor" />
+                <String fx:value="master" />
+                <String fx:value="doktorski studij" />
+                <String fx:value="strucni studij" />
+            </FXCollections>
+        </items>
+    </ComboBox>
       <DatePicker fx:id="datum_rodjenja" onAction="#dateHandler" prefHeight="31.0" prefWidth="251.0" GridPane.columnIndex="4" GridPane.rowIndex="8" />
-        
+      <Button fx:id="id_button" mnemonicParsing="false" onAction="#upisZavrsen" text="Savrsi" GridPane.columnIndex="4" GridPane.rowIndex="27" />
+       
 </children>
 </GridPane>
