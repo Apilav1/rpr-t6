@@ -9,7 +9,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import com.sun.prism.paint.Color;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.DatePicker;
@@ -49,13 +48,17 @@ public class Controller {
     public RadioButton redovan_samofinansirajuci;
     public RadioButton redovan;
     public ComboBox ciklus_studija;
+    public static boolean neispravanFormular = true;
     String odsjek, godina, status, pripadnikBorOrg, ciklus, kime, kprezime, kbrindexa, kjmbg, kdatum, kmjesto, kadresa,ktelefon, kmail;
     public DatePicker datum_rodjenja;
     public Date datumRodjenja;
     public String d;
     public boolean imeChecked=false, prezimeChecked=false, broj_indexaChecked=false, JBMGChecked=false, mjesto_rodjenjaChecked=false, adresaChecked=false;
-    public boolean telefonChecked=false, emailChecked=false, datum_rodjenjaChecked=false;
+    public boolean telefonChecked=false, emailChecked=false, datum_rodjenjaChecked=false, datePickedCheched=false;
 
+    public boolean getNeispravnaFormular(){
+        return neispravanFormular;
+    }
     public void pogasiSveSem(){
         ime.setStyle("-fx-background-color: white;");;;
          prezime.setStyle("-fx-background-color: white;");;;
@@ -137,6 +140,12 @@ public class Controller {
                     imeChecked = false;
                     kime = newValue;
                 }
+                //javafx.scene.paint.Paint fx = ime.getBackground().getFills().get(0).getFill();
+                //if(ime.getBackground().isEmpty()) ime.getBackground().;//  .getFills().get(0).getFill();
+                //System.out.println(ime.getStyle());
+                //Paint color3 = new java.awt.Color(255, 0, 0);
+                //System.out.println("bojaaaaaaa jedannnnn: "+ Color.decode(String.valueOf(fx)));
+                //System.out.println("bojaaaaaaa dvaaaaa:::"+color3);
             }
         });
         prezime.textProperty().addListener(new ChangeListener<String>() {
@@ -173,9 +182,74 @@ public class Controller {
         JMBG.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                String temp = newValue.substring(newValue.length()-1);
+                    String temp = newValue.substring(newValue.length()-1);
                 pogasiSveSem();
-                if(Pattern.matches("[a-zA-Z]+", temp) || newValue.length() != 13){
+                //provjera JMBG
+                //DD MM GGG RR BBB K
+                //za RR
+                String nastavakZaGrad="";
+                if(mjesto_rodjenja.getText().toLowerCase().equals("sarajevo")) nastavakZaGrad = "17";
+                if(mjesto_rodjenja.getText().toLowerCase().equals("banja luka")) nastavakZaGrad = "10";
+                if(mjesto_rodjenja.getText().toLowerCase().equals("bihac")) nastavakZaGrad = "11";
+                if(mjesto_rodjenja.getText().toLowerCase().equals("doboj")) nastavakZaGrad = "11";
+                if(mjesto_rodjenja.getText().toLowerCase().equals("gorazde")) nastavakZaGrad = "13";
+                if(mjesto_rodjenja.getText().toLowerCase().equals("moastar")) nastavakZaGrad = "15";
+                //10-19 – Bosna i Hercegovina
+                //             o 10 - Banja Luka
+                //             o 11 - Bihać
+                //             o 12 - Doboj
+                //             o 13 - Goražde
+                //             o 14 - Livno
+                //             o 15 - Mostar
+                //             o 16 - Prijedor
+                //             o 17 - Sarajevo
+                //             o 18 - Tuzla
+                //             o 19 - Zenica
+                //K - kontrolna cifra
+                //                                                            abcdefghijklm
+                //Kontrolna cifra se izračunava formulom gdje DDMMGGGRRBBBK = ABVGDĐEŽZIJKL
+                int m=0, kontrola=1;
+                if(JMBG.getText().length() == 13) {
+                    int a = Integer.parseInt(newValue.charAt(0) + "");
+                    int b = Integer.parseInt(newValue.charAt(1) + "");
+                    int c = Integer.parseInt(newValue.charAt(2) + "");
+                    int d = Integer.parseInt(newValue.charAt(3) + "");
+                    int e = Integer.parseInt(newValue.charAt(4) + "");
+                    int f = Integer.parseInt(newValue.charAt(5) + "");
+                    int g = Integer.parseInt(newValue.charAt(6) + "");
+                    int h = Integer.parseInt(newValue.charAt(7) + "");
+                    int i = Integer.parseInt(newValue.charAt(8) + "");
+                    int j = Integer.parseInt(newValue.charAt(9) + "");
+                    int k = Integer.parseInt(newValue.charAt(10) + "");
+                    int l = Integer.parseInt(newValue.charAt(11) + "");
+                     m = Integer.parseInt(newValue.charAt(12) + "");
+                    kontrola = 11 - ((7 * (a + g) + 6 * (b + h) + 5 * (c + i) + 4 * (d + j) + 3 * (e + k) + 2 * (f + l)) % 11);
+                    if(m == kontrola) System.out.println("---------------------tacnooo--------------------------------------------");
+                    System.out.println("------------------------"+newValue.substring(7, 9)+"-----------------------------------------");
+                    System.out.println("---------------------------"+b+"--------------------------------------");
+                    System.out.println("------------------------"+c+"-----------------------------------------");
+                    System.out.println("---------------------------"+d+"--------------------------------------");
+                    System.out.println("------------------------"+e+"-----------------------------------------");
+                    System.out.println("---------------------------"+f+"--------------------------------------");
+                    System.out.println("------------------------"+g+"-----------------------------------------");
+                    System.out.println("---------------------------"+h+"--------------------------------------");
+                    System.out.println("------------------------"+i+"-----------------------------------------");
+                    System.out.println("---------------------------"+j+"--------------------------------------");
+                    System.out.println("------------------------"+k+"-----------------------------------------");
+                    System.out.println("---------------------------"+l+"--------------------------------------");
+                    System.out.println("------------------------"+m+"-----------------------------------------");
+                    System.out.println("--------------------------"+kontrola+"---------------------------------------");
+                    System.out.println("-----------------------------------------------------------------");
+                    System.out.println("-----------------------------------------------------------------");
+                }
+                // % predstavlja MOD ili ostatak deljenja a ne / ili znak za deljenje
+                //Izraz u zagradi deli se sa 11. Pri deljenju se dobija ostatak koji se oduzima od 11 i tako se dobija L
+                //
+                //ako je kontrolna cifra između 1 i 9, ostaje ista (L = K)
+                //ako je kontrolna cifra veća od 9, postaje nula (L = 0)
+                if(Pattern.matches("[a-zA-Z]+", temp) || newValue.length() != 13 ||
+                    !nastavakZaGrad.equals(newValue.substring(7, 9)) ||
+                    m!=kontrola){
                     JBMGChecked = true;
                     JMBG.setStyle("-fx-background-color: red;");;
                 }
@@ -184,6 +258,7 @@ public class Controller {
                     JBMGChecked = false;
                     kjmbg = newValue;
                 }
+
             }
         });
         telefon.textProperty().addListener(new ChangeListener<String>() {
@@ -239,17 +314,29 @@ public class Controller {
         LocalDate temp2;
         String temp3 = JMBG.getText();
         String date = "";
-        if(temp3.length() > 9) date = "1"+temp3.substring(4, 7)+"-"+temp3.substring(2, 4)+"-"+temp3.substring(0, 2);
-        LocalDate localDate = LocalDate.parse(date);
-        System.out.println((String.valueOf(temp)));
-        System.out.println(date);
+        if(temp3.length() > 0) {
+            datum_rodjenjaChecked = false;
+            datePickedCheched = false;
+            date = "1" + temp3.substring(4, 7) + "-" + temp3.substring(2, 4) + "-" + temp3.substring(0, 2);
+            LocalDate localDate = LocalDate.parse(date);
+            System.out.println((String.valueOf(temp)));
+            System.out.println(date);
 
-        if(JBMGChecked || !date.equals(String.valueOf(temp))){
-            datum_rodjenjaChecked = true;
-            datum_rodjenja.setStyle("-fx-background-color: red;");;
+            if(JBMGChecked || !date.equals(String.valueOf(temp))){
+                datum_rodjenjaChecked = true;
+                datum_rodjenja.setStyle("-fx-background-color: red;");;
+                datePickedCheched = true;
+            }
+            else{
+                datum_rodjenja.setStyle("-fx-background-color: lightgreen;");;
+                datum_rodjenjaChecked = false;
+                datePickedCheched = false;
+            }
         }
         else{
-            datum_rodjenja.setStyle("-fx-background-color: lightgreen;");;
+            datum_rodjenja.setStyle("-fx-background-color: red;");;
+            datum_rodjenjaChecked = true;
+            datePickedCheched = true;
         }
         d = date;
     }
@@ -265,20 +352,37 @@ public class Controller {
         System.out.println(tr);
     }
 
-    public void upisZavrsen(ActionEvent actionEvent) {
+    public void upisZavrsen(ActionEvent actionEvent) throws IllegalStateException{
         //System.out.println(kime);
-        if((imeChecked || prezimeChecked || broj_indexaChecked || JBMGChecked || mjesto_rodjenjaChecked || adresaChecked ||
-        telefonChecked || emailChecked ||datum_rodjenjaChecked))
-        System.out.println("Ime "+ime.getText()+" prezime " +prezime.getText() + " broj indexa " + broj_indexa.getText()
-                            +" JMBG " +JMBG.getText() + " datum rodjenja "+ d + " mjesto rodjenja "+mjesto_rodjenja.getText()
-                            + " adresa "+adresa.getText()+ " telefon "+telefon.getText()+ " email "+email.getText()
-                            + " odsjek" + odsjek + " godina "+godina + " status "+status+ " ciklus studija "+ciklus
-                            + "pripadnost borackim kategorijama "+pripadnikBorOrg);
-        else{
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Nije validno");
-            alert.setHeaderText("Popunjeni formular nije validan");
-            alert.show();
+        try {
+            neispravanFormular = false;
+            if (ime.getText().equals("")) imeChecked = true;
+            if (prezime.getText().equals("")) prezimeChecked = true;
+            if (broj_indexa.getText().equals("")) broj_indexaChecked = true;
+            if (JMBG.getText().equals("")) JBMGChecked = true;
+            if (mjesto_rodjenja.getText().equals("")) mjesto_rodjenjaChecked = true;
+            if (adresa.getText().equals("")) adresaChecked = true;
+            if (telefon.getText().equals("")) telefonChecked = true;
+            if (email.getText().equals("")) emailChecked = true;
+            if (!(imeChecked || prezimeChecked || broj_indexaChecked || JBMGChecked || mjesto_rodjenjaChecked || adresaChecked ||
+                    telefonChecked || emailChecked || datum_rodjenjaChecked))
+                System.out.println("Ime " + ime.getText() + " prezime " + prezime.getText() + " broj indexa " + broj_indexa.getText()
+                        + " JMBG " + JMBG.getText() + " datum rodjenja " + d + " mjesto rodjenja " + mjesto_rodjenja.getText()
+                        + " adresa " + adresa.getText() + " telefon " + telefon.getText() + " email " + email.getText()
+                        + " odsjek" + odsjek + " godina " + godina + " status " + status + " ciklus studija " + ciklus
+                        + "pripadnost borackim kategorijama " + pripadnikBorOrg);
+            else {
+                neispravanFormular = false;
+                System.out.println(neispravanFormular);
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Nije validno");
+                alert.setHeaderText("Popunjeni formular nije validan");
+                alert.show();
+                throw new IllegalStateException();
+            }
+        }
+        catch (Exception e){
+
         }
     }
 }
